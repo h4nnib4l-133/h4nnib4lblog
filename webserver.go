@@ -10,12 +10,15 @@ import (
 	"html/template"
 	"regexp"
 	"errors"
+	"path/filepath"
+	"reflect"
 )
 
 type Page struct {
 	Title string
 	Body  template.HTML
 }
+
 
 var templates = template.Must(template.ParseFiles("blog.html", "source.html"))
 
@@ -69,6 +72,10 @@ func sourceHandler(w http.ResponseWriter, r *http.Request){
 
 
 func main() {
+	var templates = template.Must(template.ParseFiles("blog.html", "source.html"))
+	fmt.Println(reflect.TypeOf(templates))
+	filePath, _ := filepath.Abs("./")
+	fmt.Println(filePath)
 	fmt.Println("Listening on server 8080")
 	http.HandleFunc("/blog/", blogHandler)
 	http.HandleFunc("/source/", sourceHandler)
